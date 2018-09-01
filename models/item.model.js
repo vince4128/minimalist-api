@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const itemSchema = new Schema({
-    title:String,
+    title:{type:String, unique:true},
     author:{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     description:String,
     shortDescription:String,

@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const subitemSchema = new Schema({
     title:String,
     text:String,
-    image:[]
+    image:String
 });
 
 const Subitem = mongoose.model("Subitem", subitemSchema);
