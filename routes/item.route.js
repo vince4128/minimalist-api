@@ -35,7 +35,7 @@ router.post("/", (req,res)=>{
 // SHOW - shows more info about one particular item
 router.get("/:id", function(req, res){
     //find the item with the provided ID
-    Item.findById(req.params.id).populate("author").exec(function(err, foundItem){
+    Item.findById(req.params.id).populate("author").populate("subitem").exec(function(err, foundItem){
         if(err){
             console.log(err);
         } else {
