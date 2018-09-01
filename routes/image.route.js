@@ -11,4 +11,62 @@ router.get("/",(req,res)=>{
     })
 });
 
+//Create add a new image
+router.post("/", (req,res)=>{
+    //uploader un fichier, recuperer le nom
+    const title = req.body.title;
+    
+    const newImg = {title};
+
+    //create a new item and add it to the db
+    Image.create(newImg, (err,newlyCreated)=>{
+        if(err){
+            console.log(err);
+        }else{
+            console.log('new item added ', newlyCreated);
+            res.send(JSON.stringify(newlyCreated));
+        }
+    })
+});
+
+// SHOW - shows more info about one particular image
+
+router.get("/:id", function(req, res){
+    //find the image with the provided ID
+    Image.findById(req.params.id,(err, foundImage)=>{
+        if(err){
+            console.log(err);
+        } else {
+            console.log(foundImage);
+            res.send(JSON.stringify(foundImage));        
+        }
+    });
+});
+
+//UPDATE ROUTE
+router.put("/:id", function(req, res){
+    //req.body.blog.body = req.sanitize(req.body.blog.body);
+    Image.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedImage)=>{
+        if(err){
+            console.log(err);
+        } else {
+            console.log(updatedImage);
+            res.send(JSON.stringify(updatedImage));
+        }
+    });
+});
+
+//DELETE ROUTE
+router.delete("/:id", function(req, res){
+    Image.findByIdAndRemove(req.params.id, function(err){
+        if(err){
+            console.log(err);
+        } else {
+            console.log("deleted");
+            res.send("deleted");
+        }
+    })
+    
+ });
+
 module.exports = router;
