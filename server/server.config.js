@@ -9,7 +9,16 @@ module.exports = {
         app.use(bodyParser.json());
         app.use(methodOverride('_method'));
         app.use((req,res,next)=>{
-            const allowedOrigins = ['http://127.0.0.1', 'http://localhost', 'http://127.0.0.1:3003', 'http://localhost:3003'];
+            const allowedOrigins = [
+			'http://127.0.0.1', 
+			'http://localhost', 
+			'http://127.0.0.1:3003', 
+			'http://localhost:3003',
+			'http://127.0.0.1:3002', 
+			'http://localhost:3002',
+			'http://127.0.0.1:3001', 
+			'http://localhost:3001'
+			];
             const origin = req.headers.origin;
             if(allowedOrigins.indexOf(origin) > -1){
                  res.setHeader('Access-Control-Allow-Origin', origin);
