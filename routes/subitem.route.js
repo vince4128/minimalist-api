@@ -5,9 +5,9 @@ const   express = require("express"),
 //Index show all item
 router.get("/",(req,res)=>{
     //get all item from db
-    Subitem.find({}, (err, allSubitem)=>{
+    Subitem.find({}, (err, allSubitems)=>{
         if(err) console.log(err);
-        else res.send(JSON.stringify(allSubitem));
+        else res.send(JSON.stringify(allSubitems));
     })
 });
 

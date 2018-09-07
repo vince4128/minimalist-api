@@ -8,7 +8,7 @@ const   express         = require("express"),
 serverConfig.config(app);
 serverConnect.connect();
 
-app.use("/", routes.itemRoute);
 app.use("/subitem", routes.subitemRoute);
 app.use("/image", routes.imageRoute);
 app.use("/user", routes.userRoute);
+app.use("/", routes.itemRoute);
