@@ -8,7 +8,6 @@ const   express         = require("express"),
 serverConfig.config(app);
 serverConnect.connect();
 
-//app.use("/category", (req,res)=>{res.send('coucou')});
 app.use("/category", routes.categoryRoute);
 app.use("/subitem", routes.subitemRoute);
 app.use("/image", routes.imageRoute);
