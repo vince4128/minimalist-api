@@ -38,6 +38,8 @@ module.exports = {
         app.listen(PORT,()=>{
             console.log('server started');
         })
-    }
+    },
+
+    secret: 'azertyyuuiopsffgdhghjghj'
 
 }

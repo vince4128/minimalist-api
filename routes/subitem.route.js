@@ -2,8 +2,15 @@ const   express = require("express"),
         router  = express.Router({mergeParams:true});
         Subitem = require("../models/subitem.model");
 
+const Authentication = require('../controllers/authentication');
+const passportService = require('../services/passport');
+const passport = require('passport');
+        
+const requireAuth = passport.authenticate('jwt', { session: false });
+const requireSignin = passport.authenticate('local', { session: false });
+
 //Index show all item
-router.get("/",(req,res)=>{
+router.get("/", (req,res)=>{
     //get all item from db
     Subitem.find({}, (err, allSubitems)=>{
         if(err) console.log(err);

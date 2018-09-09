@@ -2,8 +2,16 @@ const   express = require("express"),
         router  = express.Router({mergeParams:true});
         Item    = require("../models/item.model");
 
+//        
+const Authentication = require('../controllers/authentication');
+const passportService = require('../services/passport');
+const passport = require('passport');
+        
+const requireAuth = passport.authenticate('jwt', { session: false });
+const requireSignin = passport.authenticate('local', { session: false });
+
 //Index show all item
-router.get("/",(req,res)=>{
+router.get("/", (req,res)=>{    
     //get all item from db
     Item.find({}, (err, allItems)=>{
         if(err) console.log(err);
@@ -11,8 +19,15 @@ router.get("/",(req,res)=>{
     })
 });
 
+//AUTH
+router.post('/signin', requireSignin, Authentication.signin);
+router.post('/signup', Authentication.signup);
+
 //Create add a new item to data
 router.post("/", (req,res)=>{
+    if(!req.body){
+        return res.status(400).send('Request body is missing')
+    }
     //recuperer l'auteur dans la collection user
     const title = req.body.title;
     const description = req.body.description;
@@ -24,7 +39,7 @@ router.post("/", (req,res)=>{
     //create a new item and add it to the db
     Item.create(newItem, (err,newlyCreated)=>{
         if(err){
-            console.log(err);
+            console.log(err);                        
         }else{
             console.log('new item added ', newlyCreated);
             res.send(JSON.stringify(newlyCreated));
@@ -46,7 +61,7 @@ router.get("/:id", function(req, res){
 });
 
 //UPDATE ROUTE
-router.put("/:id", function(req, res){
+router.put("/:id", requireAuth, function(req, res){
     //req.body.blog.body = req.sanitize(req.body.blog.body);
     Item.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedItem)=>{
         if(err){
@@ -59,7 +74,7 @@ router.put("/:id", function(req, res){
 });
 
 //DELETE ROUTE
-router.delete("/:id", function(req, res){
+router.delete("/:id", requireAuth, function(req, res){
     Item.findByIdAndRemove(req.params.id, function(err){
         if(err){
             console.log(err);
