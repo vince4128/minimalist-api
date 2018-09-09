@@ -1,13 +1,17 @@
-const userRoute = require("./user.route");
+//const authRoute = require("./auth.route");
+//const userRoute = require("./user.route");
 const itemRoute = require("./item.route");
 const subitemRoute = require("./subitem.route");
 const imageRoute = require("./image.route");
+const categoryRoute = require("./category.route");
 
 module.exports = {
 
-    userRoute,
+    //authRoute,
+    //userRoute,
     itemRoute,
     subitemRoute,
-    imageRoute
+    imageRoute,
+    categoryRoute
 
 }

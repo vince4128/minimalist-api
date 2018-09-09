@@ -8,7 +8,22 @@ const   express         = require("express"),
 serverConfig.config(app);
 serverConnect.connect();
 
+//app.use("/category", (req,res)=>{res.send('coucou')});
+app.use("/category", routes.categoryRoute);
 app.use("/subitem", routes.subitemRoute);
 app.use("/image", routes.imageRoute);
-app.use("/user", routes.userRoute);
+//app.use("/user", routes.userRoute);
 app.use("/", routes.itemRoute);
+
+//TODO error handler
+
+//500
+/*app.use((req,res, next) => {
+        console.error(err.stack)
+})
+
+
+//404
+app.use((req,res, next) => {
+        res.status(404).send('We think you are lost !');
+})*/
