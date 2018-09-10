@@ -56,7 +56,7 @@ const jwtLogin =  new JwtStrategy(jwtOptions, function(payload, done){
         }
 
         if(user){
-            done(null, false);
+            done(null, user);
         } else {
             done(null, false);
         }
