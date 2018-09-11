@@ -19,7 +19,7 @@ router.get("/",(req,res)=>{
 });
 
 //Create add a new image
-router.post("/", (req,res)=>{
+router.post("/", requireAuth, (req,res)=>{
     //uploader un fichier, recuperer le nom
     const title = req.body.title;
     
@@ -51,7 +51,7 @@ router.get("/:id", function(req, res){
 });
 
 //UPDATE ROUTE
-router.put("/:id", function(req, res){
+router.put("/:id", requireAuth, function(req, res){
     //req.body.blog.body = req.sanitize(req.body.blog.body);
     Image.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedImage)=>{
         if(err){
@@ -64,7 +64,7 @@ router.put("/:id", function(req, res){
 });
 
 //DELETE ROUTE
-router.delete("/:id", function(req, res){
+router.delete("/:id", requireAuth, function(req, res){
     Image.findByIdAndRemove(req.params.id, function(err){
         if(err){
             console.log(err);

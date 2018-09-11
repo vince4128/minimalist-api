@@ -19,7 +19,7 @@ router.get("/",(req,res)=>{
 });
 
 //Create add a new category to data
-router.post("/", (req,res)=>{
+router.post("/", requireAuth, (req,res)=>{
     if(!req.body){
         return res.status(400).send('Request body is missing')
     }
@@ -55,7 +55,7 @@ router.get("/:id", function(req, res){
 });
 
 //UPDATE ROUTE
-router.put("/:id", function(req, res){
+router.put("/:id", requireAuth, function(req, res){
     //req.body.blog.body = req.sanitize(req.body.blog.body);
     Category.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedCategory)=>{
         if(err){
@@ -68,7 +68,7 @@ router.put("/:id", function(req, res){
 });
 
 //DELETE ROUTE
-router.delete("/:id", function(req, res){
+router.delete("/:id", requireAuth, function(req, res){
     Category.findByIdAndRemove(req.params.id, function(err){
         if(err){
             console.log(err);

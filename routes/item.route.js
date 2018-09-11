@@ -24,7 +24,7 @@ router.post('/signin', requireSignin, Authentication.signin);
 router.post('/signup', Authentication.signup);
 
 //Create add a new item to data
-router.post("/", (req,res)=>{
+router.post("/", requireAuth, (req,res)=>{
     if(!req.body){
         return res.status(400).send('Request body is missing')
     }

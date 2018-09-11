@@ -19,7 +19,7 @@ router.get("/", (req,res)=>{
 });
 
 //Create add a new item to data
-router.post("/", (req,res)=>{
+router.post("/", requireAuth, (req,res)=>{
     //recuperer l'auteur dans la collection user
     const title = req.body.title;
     const text = req.body.text;
@@ -53,7 +53,7 @@ router.get("/:id", function(req, res){
 });
 
 //UPDATE ROUTE
-router.put("/:id", function(req, res){
+router.put("/:id", requireAuth, function(req, res){
     //req.body.blog.body = req.sanitize(req.body.blog.body);
     Subitem.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedSubitem)=>{
         if(err){
@@ -66,7 +66,7 @@ router.put("/:id", function(req, res){
 });
 
 //DELETE ROUTE
-router.delete("/:id", function(req, res){
+router.delete("/:id", requireAuth, function(req, res){
     Subitem.findByIdAndRemove(req.params.id, function(err){
         if(err){
             console.log(err);

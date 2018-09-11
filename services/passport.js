@@ -30,7 +30,7 @@ const localLogin = new Localstrategy(
             user.comparePassword(password, function(err, isMatch){
                 if(err){return done(err);}
                 if(!isMatch){return done(null, false);}
-
+                
                 return done(null, user);//user get assigned to req.user
             })
         });
