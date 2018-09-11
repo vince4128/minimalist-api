@@ -11,7 +11,7 @@ serverConnect.connect();
 app.use("/category", routes.categoryRoute);
 app.use("/subitem", routes.subitemRoute);
 app.use("/image", routes.imageRoute);
-//app.use("/user", routes.userRoute);
+app.use("/user", routes.userRoute);
 app.use("/", routes.itemRoute);
 
 //TODO error handler

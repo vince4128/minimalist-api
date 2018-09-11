@@ -11,15 +11,22 @@ const requireSignin = passport.authenticate('local', { session: false });
 
 //Index show all item
 router.get("/",(req,res)=>{
+
     //get all item from db
     User.find({}, (err, alluser)=>{
-        if(err) console.log(err);
-        else res.send(JSON.stringify(alluser));
+        if(err){
+            console.log(err)
+        }else{ res.send(
+            alluser.map((user)=>{
+                return {"_id":user._id,"email":user.email};
+            })
+        )};
     })
 });
 
 //Create add a new item to data
 router.post("/", (req,res)=>{
+
     //recuperer l'auteur dans la collection user
     const email = req.body.email;
     const password = req.body.password;
