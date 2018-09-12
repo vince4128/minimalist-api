@@ -13,10 +13,14 @@ const requireSignin = passport.authenticate('local', { session: false });
 //Index show all item
 router.get("/", (req,res)=>{    
     //get all item from db
-    Item.find({}, (err, allItems)=>{
+    Item.find({}).populate("author", "-password -created -__v").populate("category").populate("image").exec((err, allItems)=>{
         if(err) console.log(err);
         else res.send(JSON.stringify(allItems));
-    })
+    });
+    /*Item.find({}, (err, allItems)=>{
+        if(err) console.log(err);
+        else res.send(JSON.stringify(allItems));
+    })*/
 });
 
 //AUTH
@@ -33,8 +37,10 @@ router.post("/", requireAuth, (req,res)=>{
     const description = req.body.description;
     const shortDescription = req.body.shortDescription;
     const image = req.body.image;
-    
-    const newItem = {title,description,shortDescription,image};
+    const author = req.body.author;
+    const category = req.body.category;
+
+    const newItem = {title,description,shortDescription,image,author,category};
 
     //create a new item and add it to the db
     Item.create(newItem, (err,newlyCreated)=>{
@@ -50,7 +56,7 @@ router.post("/", requireAuth, (req,res)=>{
 // SHOW - shows more info about one particular item
 router.get("/:id", function(req, res){
     //find the item with the provided ID
-    Item.findById(req.params.id).populate("author").populate("subitem").exec(function(err, foundItem){
+    Item.findById(req.params.id).populate("author", "-password -created -__v").populate("subitem").populate("category").populate("image").exec(function(err, foundItem){
         if(err){
             console.log(err);
         } else {
