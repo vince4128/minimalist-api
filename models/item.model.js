@@ -9,7 +9,7 @@ const itemSchema = new Schema({
     shortDescription:String,
     date: { type: Date, default: Date.now },
     subitem:[{type: mongoose.Schema.Types.ObjectId, ref: 'Subitem'}],    
-    image:String
+    image:{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}
 });
 
 const Item = mongoose.model("Item", itemSchema);
