@@ -1,6 +1,7 @@
 const   express = require("express"),
-        router  = express.Router({mergeParams:true});
-        Subitem = require("../models/subitem.model");
+        router  = express.Router({mergeParams:true}),
+        Subitem = require("../models/subitem.model"),
+        Item = require("../models/item.model");
 
 const Authentication = require('../controllers/authentication');
 const passportService = require('../services/passport');
@@ -18,9 +19,8 @@ router.get("/", (req,res)=>{
     });
 });
 
-//Create add a new item to data
+//Create add a new subitem to data
 router.post("/", requireAuth, (req,res)=>{
-    //recuperer l'auteur dans la collection user
     const title = req.body.title;
     const text = req.body.text;
     const image = req.body.image;
@@ -35,7 +35,13 @@ router.post("/", requireAuth, (req,res)=>{
             console.log('new item added ', newlyCreated);
             res.send(JSON.stringify(newlyCreated));
         }
-    })
+    });
+
+    //Ajouter le subitem a son item
+    if(req.body.idParent){
+        console.log("ajouter le subitem a item");
+    }
+
 });
 
 // SHOW - shows more info about one particular subitem
