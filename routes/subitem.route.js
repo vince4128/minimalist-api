@@ -12,10 +12,10 @@ const requireSignin = passport.authenticate('local', { session: false });
 //Index show all item
 router.get("/", (req,res)=>{
     //get all item from db
-    Subitem.find({}, (err, allSubitems)=>{
+    Subitem.find({}).populate("image").exec((err, allSubitems)=>{
         if(err) console.log(err);
-        else res.send(JSON.stringify(allSubitems));
-    })
+        else res.send(allSubitems);
+    });
 });
 
 //Create add a new item to data
@@ -42,14 +42,16 @@ router.post("/", requireAuth, (req,res)=>{
 
 router.get("/:id", function(req, res){
     //find the subitem with the provided ID
-    Subitem.findById(req.params.id,(err, foundSubItem)=>{
+
+    Subitem.findById(req.params.id).populate("image").exec((err, foundSubItem)=>{
         if(err){
             console.log(err);
         } else {
             console.log(foundSubItem);
-            res.send(JSON.stringify(foundSubItem));        
+            res.send(foundSubItem);
         }
-    });
+    })
+
 });
 
 //UPDATE ROUTE
