@@ -15,7 +15,7 @@ router.get("/", (req,res)=>{
     //get all item from db
     Item.find({}).populate("author", "-password -created -__v").populate("category").populate("image").exec((err, allItems)=>{
         if(err) console.log(err);
-        else res.send(JSON.stringify(allItems));
+        else res.send(allItems);
     });
     /*Item.find({}, (err, allItems)=>{
         if(err) console.log(err);
@@ -48,7 +48,7 @@ router.post("/", requireAuth, (req,res)=>{
             console.log(err);                        
         }else{
             console.log('new item added ', newlyCreated);
-            res.send(JSON.stringify(newlyCreated));
+            res.send(newlyCreated);
         }
     })
 });
@@ -61,7 +61,7 @@ router.get("/:id", function(req, res){
             console.log(err);
         } else {
             console.log(foundItem);
-            res.send(JSON.stringify(foundItem));        
+            res.send(foundItem);        
         }
     });
 });
@@ -74,7 +74,7 @@ router.put("/:id", requireAuth, function(req, res){
             console.log(err);
         } else {
             console.log(updatedItem);
-            res.send(JSON.stringify(updatedItem));
+            res.send(updatedItem);
         }
     });
 });
