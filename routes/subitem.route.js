@@ -33,14 +33,41 @@ router.post("/", requireAuth, (req,res)=>{
             console.log(err);
         }else{
             console.log('new item added ', newlyCreated);
-            res.send(JSON.stringify(newlyCreated));
+            addToItem(newlyCreated);
+            //res.send(JSON.stringify(newlyCreated));
         }
     });
 
-    //Ajouter le subitem a son item
-    if(req.body.idParent){
+    const addToItem = (newlyCreated) => {
         console.log("ajouter le subitem a item");
+
+        if(req.body.idParent){
+            const id = req.body.idParent;
+            const idSubItem = newlyCreated._id;
+            Item.findByIdAndUpdate(id, { $push: { subitem: idSubItem } }, {new: true}, (err, updatedSubitem)=>{
+                if(err){
+                    console.log(err);
+                } else {
+                    console.log(updatedSubitem);
+                    res.send(JSON.stringify(updatedSubitem));
+                    console.log("subitem ajoute a item !");
+                }
+            })
+        }
     }
+
+    /*if(req.body.idParent){
+        const id = req.body.idParent;
+
+        const idSubItem =  
+
+        Item.findByIdAndUpdate(id, )
+    }*/
+
+    //Ajouter le subitem a son item
+    /*if(req.body.idParent){
+        console.log("ajouter le subitem a item");
+    }*/
 
 });
 
