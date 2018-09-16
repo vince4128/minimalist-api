@@ -2,7 +2,8 @@ const   express = require("express"),
         router  = express.Router({mergeParams:true}),
         Image = require("../models/image.model"),
         fs      = require("fs"),
-        formidable = require("formidable");
+        multer  = require("multer"),
+        upload = multer({dest: "public/"});
 
 const Authentication = require('../controllers/authentication');
 const passportService = require('../services/passport');
@@ -20,12 +21,10 @@ router.get("/",(req,res)=>{
     })
 });
 
+const cpUpload = upload.single([{name:'imageToUpload'}]);
+
 //Create add a new image
-router.post("/", requireAuth, (req,res)=>{
-
-    //upload d'un fichier image
-    
-
+router.post("/", requireAuth, cpUpload,  (req,res)=>{
 
     //uploader un fichier, recuperer le nom
     const title = req.body.title;

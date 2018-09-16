@@ -1,7 +1,6 @@
 const   express = require("express"),
-        router  = express.Router({mergeParams:true});
-        Item    = require("../models/item.model");
-
+        router  = express.Router({mergeParams:true}),
+        Item    = require("../models/item.model");    
 //        
 const Authentication = require('../controllers/authentication');
 const passportService = require('../services/passport');

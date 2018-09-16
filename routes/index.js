@@ -4,6 +4,7 @@ const itemRoute = require("./item.route");
 const subitemRoute = require("./subitem.route");
 const imageRoute = require("./image.route");
 const categoryRoute = require("./category.route");
+const uploadRoute = require("./upload.route");
 
 module.exports = {
 
@@ -12,6 +13,7 @@ module.exports = {
     itemRoute,
     subitemRoute,
     imageRoute,
-    categoryRoute
+    categoryRoute,
+    uploadRoute
 
 }
