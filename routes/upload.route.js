@@ -1,7 +1,8 @@
 const   express = require("express"),
         router  = express.Router({mergeParams:true}),
-        //Image = require("../models/image.model"),
-        fs      = require("fs"),
+        Image = require("../models/image.model"),
+        crypto  = require('crypto'),
+        path    = require('path'),
         multer  = require("multer");     
 
 //const Authentication = require('../controllers/authentication');
@@ -11,12 +12,27 @@ const   express = require("express"),
 //const requireAuth = passport.authenticate('jwt', { session: false });
 //const requireSignin = passport.authenticate('local', { session: false });
 
-upload = multer({dest: "public/"});
+const storage = multer.diskStorage({    
+    destination: './upload/',
+    filename: function (req, file, cb) {
+      crypto.pseudoRandomBytes(16, function (err, raw) {
+        if (err) return cb(err)
+  
+        cb(null, raw.toString('hex') + path.extname(file.originalname))
+      })
+    }
+  })
+
+upload = multer({storage});
 
 //Create add a new upload
-router.post("/", upload.single('imageToUpload'), (req,res)=>{
-    console.log('upload route', req);
-    res.json({"filename": req.file.name, "type": req.file.mimetype});
+router.post("/", upload.single('file'), (req,res)=>{
+
+    //fonctionne
+    console.log('upload route', req.body, req.file, req.file.originalname);
+    res.json({file: `upload/${req.body.filename}.jpg`});
+    //end fonctionne
+
 });
 
 module.exports = router;

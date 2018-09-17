@@ -7,7 +7,7 @@ const PORT = 3000;
 module.exports = {
 
     config : function(app) {
-        app.use('/public', express.static(__dirname + '/public'));
+        app.use('/upload', express.static(__dirname + '/public'));
         app.use(express.static(__dirname + '/public'));
         app.use(bodyParser.json());
         app.use(methodOverride('_method'));
@@ -22,7 +22,9 @@ module.exports = {
 			'http://127.0.0.1:3001', 
 			'http://localhost:3001',
 			'http://127.0.0.1:3000', 
-            'http://localhost:3000'
+            'http://localhost:3000',
+			'http://127.0.0.1:5500', 
+            'http://localhost:5500'
 			];
             const origin = req.headers.origin;
             if(allowedOrigins.indexOf(origin) > -1){
