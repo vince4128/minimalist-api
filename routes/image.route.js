@@ -71,12 +71,24 @@ router.put("/:id", requireAuth, function(req, res){
 
 //DELETE ROUTE
 router.delete("/:id", requireAuth, function(req, res){
+
+    //find the image with the provided ID
+    Image.findById(req.params.id,(err, foundImage)=>{
+        if(err){
+            console.log(err);
+        } else {
+            console.log(foundImage);
+            const path = `./upload/${foundImage.title}`;
+            fs.unlinkSync(path);
+        }
+    });
+
     Image.findByIdAndRemove(req.params.id, function(err){
         if(err){
             console.log(err);
         } else {
             console.log("deleted");
-            res.send("deleted");
+            res.send("deleted");                        
         }
     })
     
