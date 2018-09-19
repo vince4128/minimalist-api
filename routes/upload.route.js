@@ -16,8 +16,22 @@ const storage = multer.diskStorage({
     destination: './upload/',
     filename: function (req, file, cb) {
       if(req.body.filename){
+        const name = req.body.filename + '-' + Date.now() + path.extname(file.originalname);
         //cb(null, req.body.filename + '-' + Date.now() + path.extname(file.originalname))
-        cb(null, req.body.filename + '-' + Date.now() + path.extname(file.originalname))
+        cb(null, name)
+        console.log("file uploaded !!!!!!!!!!!")
+
+        const newImg = {title:name};
+
+        //add image to db
+        Image.create(newImg, (err,newlyCreated)=>{
+          if(err){
+              console.log(err);
+          }else{
+              console.log('new image added ', newlyCreated);
+          }
+        })
+
       }else{
         crypto.pseudoRandomBytes(16, function (err, raw) {
           if (err) return cb(err)
